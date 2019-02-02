@@ -16,12 +16,14 @@ Your finished project must include all of the following requirements:
 
 | Objective  | 1 | 2 | 3 |
 |---|---|---|---|
-| MVP work - Project should incorporate all of the listed MVP features | Student did not achieve all of the MVP features of the project. |   |   |
-| Team contribution |   |   |   |
-| Data model is normalized |  |  |  |
-| The API incorporates authentication |  |  |  |
-| Project has automated testing suites covering Endpoints and Business Logic  |  |  |  |
-| Secrets are protected using environment variables |  |  |  |
+| MVP work - Project should incorporate all of the listed MVP features | Student did not achieve all of the MVP features of the project. | Student's work demonstrates that all MVP features were built | Student's work demonstrates that all MVP features were built and the student went above and beyond the project. |
+| Team contribution | Student's work demonstrates that all MVP features were built and the student went above and beyond the project. | Team member was collaborative, able to work in a team environment | Pair programmed with the Web UI and Web Architect |
+| Student should have built a CRUD API using Node/Express | Student did not build a CRUD API with all of the required endpoints, or the endpoints that exist don't work | Student built a CRUD API using Node and Express, code is clean and organized. | Student built a CRUD API using Node and Express, code is clean and organized. Student organized code using a patern similar to MVC, the usage of Routes and controllers and middleware is present and property incorperated throughout the project's backend |
+| Data model is normalized | Student created a data model that exhibits data repetition and does not take advantage of foreign key constraints. | Student built a normalized data model where each entity is tracked in it's own table and where appropriate made use of Foreign Key constraints to ensure data integrity and consistency. | Student incorporated Knex migration and or seeding scripts to their solution. |
+| The API incorporates authentication | Student incorporated Knex migration and or seeding scripts to their solution. | Student incorporated Knex migration and or seeding scripts to their solution. | Student incorporated Knex migration and or seeding scripts to their solution. |
+| Project has automated testing suites covering Endpoints and Business Logic  | Student incorporated Knex migration and or seeding scripts to their solution. | The core business logic is tested using unit tests. | The project has unit and integration tests that include end to end testing using a test database. |
+| API is deployed to the web | The API is not deployed and only runs on localhost. | The API is not deployed and only runs on localhost. | The API is not deployed and only runs on localhost. |
+| Secrets are protected using environment variables | Any secrets like API keys and hashing secrets are hard-coded in the source code | Any secrets like API keys and hashing secrets are hard-coded in the source code | Any secrets like API keys and hashing secrets are hard-coded in the source code |
 
 
 ## Project Set Up
