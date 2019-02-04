@@ -23,7 +23,7 @@ Your finished project must include all of the following requirements:
 | The API incorporates authentication | Student did not add a way to authenticate users and restrict access to endpoints to only logged in users. | Student added authentication and restricted endpoints to be accessible only by logged in users. | Student added authorization and a way to restrict endpoints to users with that are authorized to access them. This could be as simple as using roles and restricting endpoints to a particular role. |
 | Project has automated testing suites covering Endpoints and Business Logic  | The solution does not have any automated testing in place. | The core business logic is tested using unit tests. | The project has unit and integration tests that include end to end testing using a test database. |
 | API is deployed to the web | The API is not deployed and only runs on localhost. | The API is not deployed and only runs on localhost. | The API is deployed on the web and can be accessed from anywhere, but the deployment is done manually. |
-| Secrets are protected using environment variables | Any secrets like API keys and hashing secrets are hard-coded in the source code | Secrets are extracted out into environment variables using .env files that most be manually changed when deploying. | The project is configured to dinamically load the appropriate secrets based on the environment it's running on. |
+| Secrets are protected using environment variables | Any secrets like API keys and hashing secrets are hard-coded in the source code | Secrets are extracted out into environment variables using .env files that most be manually changed when deploying. | The project is configured to dynamically load the appropriate secrets based on the environment it's running on. |
 
 
 ## Project Set Up
@@ -41,3 +41,15 @@ Notifications: When it's time for the message to be sent, recipient will receive
 Edit Message Schedule Page: user can edit and/or delete a message from their schedule.
 
 Stretch: Allow a mentor to create/import contact information for the clients they mentor. Allow a 2nd user type (board member) to be able to log in and see trainer’s profiles based on an invitation. They can also Create, Read, Update and Delete messages to send client groups.
+
+## To-Do
+
+- [ ] Fix/implement cookie validation
+- [ ] Seeding data to the database
+- [ ] Dynamically create secret using randomizer
+- [ ] Add many-many relationship for messages and contacts (maybe)
+- [ ] Unit testing server code
+- [ ] Use JWT as access token in cookie
+- [ ] Form validation using JOI
+- [ ] Unit testing JOI form validation
+- [ ] Set up database stored user sessions. Allow for multiple sessions

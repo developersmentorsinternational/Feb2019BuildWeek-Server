@@ -16,6 +16,11 @@ exports.up = function(knex) {
             .notNullable()
 
         tbl.string('password', 255).notNullable();
+
+        tbl.string('countryCode', 255).notNullable();
+
+        tbl.string('phoneNumber', 255).notNullable();
+
     });
     };
   

@@ -10,17 +10,18 @@ const sessionConfig = {
   name: "UserCookie",
   secret: process.env.JWT_SECRET,
   cookie: {
-    maxAge: 1000 * 60 * 5,
+    maxAge: 1000 * 60 * 2,
     secure: false 
   },
-  httpOnly: false, 
+  httpOnly: true, 
   resave: false,
   saveUninitialized: false
 };
 
 function protected(req,res,next){
   if(req.session && req.session.user){
-      next();
+    
+      next()
   } else {
       res.status(401).json({message:"Not Authorized or Not Logged in"})
   }
@@ -35,11 +36,11 @@ server.use(session(sessionConfig));
 
 server.get("/", async (req,res) => {
   res.status(200).send("The server is up and running");
+  console.log(req.body)
 })
 
 server.post("/register", async (req, res) => {
   const userInfo = req.body;
-
   const hash = bcrypt.hashSync(userInfo.password, 12);
   userInfo.password = hash;
 
