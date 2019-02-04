@@ -11,7 +11,7 @@ router.get("/user", async (req, res) => {
       res.status(200).json(user);
     } catch (err) {
       console.log(err);
-      return err;
+      res.status(500).json({ message: `Server error`, error: err });
     }
   });
 
@@ -21,7 +21,7 @@ try {
     res.status(200).json(users);
 } catch (err) {
     console.log(err);
-    return err;
+    res.status(500).json({ message: `Server error`, error: err });
 }
 });
 

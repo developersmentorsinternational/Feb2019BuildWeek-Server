@@ -5,15 +5,16 @@ const bcrypt = require("bcryptjs");
 const db = require("./dbFunctions");
 const session = require("express-session");
 const protectedRoutes = require("./protectedRoutes");
+const path = require('path');
 
 const sessionConfig = {
   name: "UserCookie",
   secret: process.env.JWT_SECRET,
   cookie: {
-    maxAge: 1000 * 60 * 2,
+    maxAge: 1000 * 60 * 15,
     secure: false 
   },
-  httpOnly: true, 
+  httpOnly: false, 
   resave: false,
   saveUninitialized: false
 };
@@ -35,8 +36,7 @@ server.use(express.json());
 server.use(session(sessionConfig));
 
 server.get("/", async (req,res) => {
-  res.status(200).send("The server is up and running");
-  console.log(req.body)
+  res.status(200).sendFile(path.join(__dirname + '/index.html'));
 })
 
 server.post("/register", async (req, res) => {

@@ -53,3 +53,4 @@ Stretch: Allow a mentor to create/import contact information for the clients the
 - [ ] Form validation using JOI
 - [ ] Unit testing JOI form validation
 - [ ] Set up database stored user sessions. Allow for multiple sessions
+- [ ] Implement picture upload for the profile picture
