@@ -45,8 +45,9 @@ server.post("/register", async (req, res) => {
   userInfo.password = hash;
 
   try {
-    const response = await db.addUser(userInfo);
-    res.status(201).json(response);
+    const newUser = await db.addUser(userInfo);
+    req.session.user = newUser;
+    res.status(201).send(newUser);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

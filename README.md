@@ -44,6 +44,7 @@ Stretch: Allow a mentor to create/import contact information for the clients the
 
 ## To-Do
 
+- [ ] Test if a new user can register a custom ID. This may be a potential security issue
 - [ ] Fix/implement cookie validation
 - [ ] Seeding data to the database
 - [ ] Dynamically create secret using randomizer
