@@ -5,7 +5,6 @@ const dbFuncs = {
         return db('users')
     },
     getUser:  (creds) => {
-        console.log(creds)
         return db("users")
         .where({email: creds.email})
         .first()
