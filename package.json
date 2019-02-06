@@ -2,12 +2,11 @@
   "name": "feb2019buildweek",
   "version": "1.0.0",
   "description": "Training reminder web app for Mentors International",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest --verbose server.js",
     "dev": "nodemon server.js",
-    "start":"node server_prod.js",
-    "old_script": "npx knex migrate:latest && npx knex seed:run && node server.js"
+    "start":"node server_prod.js"
   },
   "repository": {
     "type": "git",
