@@ -1,9 +1,9 @@
 exports.up = function(knex) {
-    return knex.schema.createTable('type', tbl => {
+    return knex.schema.createTable('types', tbl => {
         tbl.increments('id');
 
         tbl
-        .string('types',255)
+        .string('type',255)
         .notNullable()
         .unique();
 
@@ -11,7 +11,7 @@ exports.up = function(knex) {
     };
   
   exports.down = function(knex, Promise) {
-    return knex.schema.dropTableIfExists('type');
+    return knex.schema.dropTableIfExists('types');
   };
 
 

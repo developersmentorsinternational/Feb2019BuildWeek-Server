@@ -12,7 +12,7 @@ const dbFuncs = {
         .first()
     },
     addUser: (userInfo) => {
-        return db('users')
+        return db('people')
         .insert(userInfo)
         .then(res => db("users").select("id","email","firstName","lastName","countryCode","phoneNumber")
         .where(

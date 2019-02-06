@@ -23,7 +23,7 @@ exports.up = function(knex) {
 
         tbl
         .foreign('countryCode')
-        .references('countryCodes.code')
+        .references('countryCodes.id')
 
         tbl
         .integer('type')
@@ -32,15 +32,15 @@ exports.up = function(knex) {
 
         tbl
         .foreign('type')
-        .references('type.id')
+        .references('types.id')
 
         tbl
-        .integer('regions')
+        .integer('region')
         .unsigned()
         .notNullable()
 
         tbl
-        .foreign('regions')
+        .foreign('region')
         .references('regions.id')
 
         // tbl

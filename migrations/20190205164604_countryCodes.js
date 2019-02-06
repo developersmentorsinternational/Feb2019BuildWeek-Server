@@ -3,7 +3,7 @@ exports.up = function(knex) {
         tbl.increments('id');
 
         tbl
-        .string('codes',255)
+        .string('countryCode',255)
         .notNullable()
         .unique();
 
