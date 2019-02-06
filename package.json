@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --verbose server.js",
     "dev": "nodemon server.js",
-    "start": "npx knex migrate:latest && npx knex seed:run && node server.js"
+    "start":"node server_prod.js",
+    "old_script": "npx knex migrate:latest && npx knex seed:run && node server.js"
   },
   "repository": {
     "type": "git",
