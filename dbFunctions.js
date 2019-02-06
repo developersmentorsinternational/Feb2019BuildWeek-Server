@@ -18,6 +18,15 @@ const dbFuncs = {
         .where(
             {id:res[0]}).first()
         )
+    },
+    submitMessage: (message) => {
+
+        return db('usersmessages')
+        .insert({...message})
+    },
+    getOwnMessages: (userID) => {
+        return db('usersmessages')
+        .where({sender: userID})
     }
 }
 
