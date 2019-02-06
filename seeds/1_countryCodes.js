@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('countryCodes').insert([
-        {id: 1, countryCode: 'US'}
+        {countryCode: 'US'}
       ]);
     });
 };

@@ -2839,6 +2839,11 @@ url-parse-lax@^1.0.0:
   dependencies:
     prepend-http "^1.0.1"
 
+usa-states@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/usa-states/-/usa-states-0.0.5.tgz#3a88c972def5345ae9b87186fc4402385b861bb7"
+  integrity sha1-OojJct71NFrpuHGG/EQCOFuGG7c=
+
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"

@@ -45,7 +45,7 @@ server.post("/register", async (req, res) => {
   userInfo.password = hash;
 
   try {
-    const newUser = await db.addUser(userInfo);
+    const newUser = await db.addMentor(userInfo);
     req.session.user = newUser;
     res.status(201).send(newUser);
   } catch (err) {
@@ -57,7 +57,7 @@ server.post("/register", async (req, res) => {
 server.post("/login", async (req, res) => {
   const creds = req.body;
   try {
-    const user = await db.getUser(creds);
+    const user = await db.getMentor(creds);
     if (user && bcrypt.compareSync(creds.password, user.password)) {
       req.session.user = user;
       res.status(200).json({ message: `Welcome ${user.firstName}` });
@@ -71,6 +71,15 @@ server.post("/login", async (req, res) => {
     res.status(500).json({ message: `Server error`, error: err });
   }
 });
+
+server.get("/regions", async (req,res) => {
+  try{
+    const regions = await db.getRegions();
+    res.status(200).json(regions);
+  }catch(err){
+    res.status(500).json({ message: `Server error`, error: err });
+  }
+})
 
 server.use("/api" , protected, protectedRoutes)
 

@@ -5,8 +5,8 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('types').insert([
-        {id: 1, type: 'MENTOR'},
-        {id: 2, type: 'CLIENT'}
+        { type: 'MENTOR'},
+        { type: 'CLIENT'}
       ]);
     });
 };

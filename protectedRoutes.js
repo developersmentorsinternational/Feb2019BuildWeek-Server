@@ -8,7 +8,8 @@ const nodemailer = require("nodemailer");
 
 router.get("/user", async (req, res) => {
     try {
-      const user = await db.getUser(req.session.user);
+      let user = await db.getMentor(req.session.user);
+      delete user.password
       res.status(200).json(user);
     } catch (err) {
       console.log(err);
@@ -18,7 +19,7 @@ router.get("/user", async (req, res) => {
 
 router.get("/users", async (req, res) => {
 try {
-    const users = await db.getUsers();
+    const users = await db.getMentors();
     res.status(200).json(users);
 } catch (err) {
     console.log(err.message);
