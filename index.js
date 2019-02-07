@@ -12,9 +12,9 @@ const sessionConfig = {
   secret: process.env.JWT_SECRET,
   cookie: {
     maxAge: 1000 * 60 * 15,
-    secure: false
+    secure: false,
+    httpOnly: false
   },
-  httpOnly: false, 
   resave: false,
   saveUninitialized: false
 };
@@ -30,7 +30,7 @@ function protected(req,res,next){
 
 const server = express();
 
-server.use(helmet());
+// server.use(helmet());
 server.use(cors());
 server.use(express.json());
 server.use(session(sessionConfig));
