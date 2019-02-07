@@ -16,9 +16,9 @@ function authenticate(req, res, next) {
   if (token) {
     jwt.verify(token, jwtKey, (err, decoded) => {
       if (err) return res.status(401).json(err);
-
+      
       req.decoded = decoded;
-
+      console.log("authenticated")
       next();
     });
   } else {
@@ -30,14 +30,14 @@ function authenticate(req, res, next) {
 
 function generateToken(user) {
 	const payload = {
-		username: user.username,
-		name: user.name
+		email: user.email,
+		id: user.id
 	};
 
 	const secret = process.env.JWT_SECRET;
 
 	const options = {
-		expiresIn: '2m',
+		expiresIn: '5m',
 	};
 
 	return jwt.sign(payload, secret, options);

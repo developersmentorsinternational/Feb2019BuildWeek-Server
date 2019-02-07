@@ -18,12 +18,15 @@ const dbFuncs = {
         .first()
     },
     addMentor: (userInfo) => {
-        return db('people')
-        .insert(userInfo)
-        .then(res => db("users").select("id","email","firstName","lastName","countryCode","phoneNumber")
-        .where(
-            {id:res[0]}).first()
-        )
+        const {firstName,lastName,countryCode,region,phoneNumber} = userInfo;
+        const {email,password} = userInfo;
+        const type = 1;
+        return db("people")
+        .insert({firstName,lastName,countryCode,region,phoneNumber,type})
+        .then(res => {
+            return db("creds").insert({mentor:res[0],email,password})
+        })
+        .catch(err => err)
     },
     // submitMessage: (message) => {
 
