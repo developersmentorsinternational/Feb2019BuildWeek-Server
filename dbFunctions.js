@@ -33,10 +33,15 @@ const dbFuncs = {
     //     return db('usersmessages')
     //     .insert({...message})
     // },
-    // getOwnMessages: (userID) => {
-    //     return db('usersmessages')
-    //     .where({sender: userID})
-    // },
+    getOwnMessages: (creds) => {
+        return db('usersmessages')
+        .where({creatorID: creds.id})
+    },
+    getOwnGroups: (creds) => {
+        return db('groups')
+        .where({creatorID: creds.id})
+    }
+    ,
     getRegions: () => {
         return db("regions")
     }

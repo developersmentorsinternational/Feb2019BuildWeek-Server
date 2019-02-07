@@ -46,11 +46,19 @@ router.post("/message", async (req, res) => {
 //{ [Error: SQLITE_ERROR: table usersmessages has no column named message] errno: 1, code: 'SQLITE_ERROR' }
 
 router.get("/get-messages", async (req, res) => {
-    const senderID = req.session.user.id
-    console.log(senderID)
     try {
-        const messages = await db.getOwnMessages(senderID);
+        const messages = await db.getOwnMessages(req.decoded);
         res.status(200).json(messages);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ message: `Server error`, error: err });
+    }
+    });
+
+router.get("/get-groups", async (req, res) => {
+    try {
+        const groups = await db.getOwnGroups(req.decoded);
+        res.status(200).json(groups);
     } catch (err) {
         console.log(err.message);
         res.status(500).json({ message: `Server error`, error: err });

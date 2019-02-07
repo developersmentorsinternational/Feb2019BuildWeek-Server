@@ -8,7 +8,7 @@ const server = express();
 const { authenticate,generateToken } = require('./auth/authenticate');
 const protectedRoutes = require("./protectedRoutes");
 
-// server.use(helmet());
+server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
@@ -33,7 +33,10 @@ async function register(req, res) {
   userInfo.password = hash;
   try {
     const response = await db.addMentor(userInfo);
-    res.status(201).json(response);
+    console.log(response)
+    let user = await db.getMentor(userInfo);
+    const token = generateToken(user);
+    res.status(201).json({user,token});
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -46,9 +49,8 @@ async function login(req, res) {
     let user = await db.getMentor(creds);
     if (user && bcrypt.compareSync(creds.password, user.password)) {
         const token = generateToken(user);
-        const regions = await db.getRegions();
         delete user.password
-        res.status(200).json({ user,token,regions });
+        res.status(200).json({ user,token });
     } else {
       res
         .status(401)
