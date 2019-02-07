@@ -7,7 +7,7 @@ exports.up = function(knex) {
         .notNullable()
 
         tbl
-        .string('created',255)
+        .datetime('created')
         .notNullable()
         
         //add constraint that it must be a mentor

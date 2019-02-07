@@ -7,7 +7,7 @@ exports.up = function(knex) {
         .notNullable()
 
         tbl
-        .string('created',160)
+        .datetime('created')
         .notNullable()
 
         // tbl

@@ -12,7 +12,8 @@ const sessionConfig = {
   secret: process.env.JWT_SECRET,
   cookie: {
     maxAge: 1000 * 60 * 15,
-    secure: false 
+    secure: false,
+    domain:"mentors-international.netlify.com"
   },
   httpOnly: false, 
   resave: false,

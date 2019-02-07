@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --verbose server.js",
     "dev": "nodemon server.js",
-    "start":"node server_prod.js"
+    "start":"node server_prod.js",
+    "reload":"knex migrate:rollback && knex migrate:latest && knex seed:run"
   },
   "repository": {
     "type": "git",
