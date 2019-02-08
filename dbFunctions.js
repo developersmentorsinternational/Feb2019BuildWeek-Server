@@ -34,8 +34,11 @@ const dbFuncs = {
     //     .insert({...message})
     // },
     getOwnMessages: (creds) => {
-        return db('usersmessages')
-        .where({creatorID: creds.id})
+        return db.select(["groups.name","groupmessages.groupID","groupmessages.messageID","messages.body","messages.created"]).from('groupmessages')
+        .innerJoin('messages','messages.id', 'groupmessages.messageID')
+        .innerJoin('groups', 'groups.id', 'groupmessages.groupID')
+        .where({creatorID:creds.id});
+        
     },
     getOwnGroups: (creds) => {
         return db('groups')

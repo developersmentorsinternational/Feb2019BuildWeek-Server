@@ -10,6 +10,7 @@ exports.seed = function(knex, Promise) {
         { body: "Welcome to our group",created:"2019-01-01 22:00"},
         { body: "Hi please respond to this message",created:"2019-02-01 13:00"},
         { body: "You have been assigned to our group",created:"2019-09-01 14:00"},
+        { body: "Hello, testing",created:"2019-10-06 17:00"},
       ]);
     });
 };

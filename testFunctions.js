@@ -18,23 +18,79 @@ const db = require("./dbConfig");
 // .then(res => console.log(res))
 // .catch(err => console.log(err))
 
-const testReg = {   
-    "email": "hey@hey.com", 
-    "firstName":"andy",
-    "lastName":"smith",
-    "password":"password",
-    "countryCode":"1",
-    "phoneNumber":"555-678-4321",
-    "region":50
-}
-db("people")
-.insert({firstName:testReg.firstName,lastName:testReg.lastName,countryCode:testReg.countryCode,region:testReg.region,phoneNumber:testReg.phoneNumber,type:1})
+// const testReg = {   
+//     "email": "hey@hey.com", 
+//     "firstName":"andy",
+//     "lastName":"smith",
+//     "password":"password",
+//     "countryCode":"1",
+//     "phoneNumber":"555-678-4321",
+//     "region":50
+// }
+
+// db.select(["groups.name","messages.body","messages.created"]).from('groups')
+// .innerJoin('groupmessages', 'groups.creatorID', 'groupmessages.creatorID')
+
+
+const prom1 = db.select(["groups.name","groupmessages.groupID","groupmessages.messageID","messages.body","messages.created"]).from('groupmessages')
+.innerJoin('messages','messages.id', 'groupmessages.messageID')
+.innerJoin('groups', 'groups.id', 'groupmessages.groupID')
+
+.where({"email": 1})
+// .then(res => console.log(res))
+// .catch(err => console.log(err))
 .then(res => {
     console.log(res)
-    return db("creds").insert({mentor:res[0],email:testReg.email,password:testReg.password})
+    process.exit();
+    })
+.catch(err => {
+    console.log(err)
+    process.exit();
 })
-.then(res => console.log(res))
-.catch(err => console.log(err))
+
+
+// const prom2 = db.select().from('messages')
+
+// Promise.all([prom1,prom2])
+// .then(res => {
+//     console.log(res)
+//     process.exit();
+//     })
+// .catch(err => {
+//     console.log(err)
+//     process.exit();
+// })
+
+
+// db.transaction(function(trx) {
+//     db("people").insert({firstName:testReg.firstName,lastName:testReg.lastName,countryCode:testReg.countryCode,region:testReg.region,phoneNumber:testReg.phoneNumber,type:1})
+//       .transacting(trx)
+//       .then(function(res) {
+//           return db("creds").insert({mentor:res[0],email:testReg.email,password:testReg.password}).transacting(trx)
+//       })
+//       .then(res => {
+//           console.log(res)
+//           trx.commit(res)
+//         })
+//       .catch(trx.rollback);
+//   })
+//   .then(function(res) {
+//     console.log(res);
+//   })
+//   .catch(function(err) {
+//     console.error(err);
+// });
+  
+
+
+// db("people")
+// .insert({firstName:testReg.firstName,lastName:testReg.lastName,countryCode:testReg.countryCode,region:testReg.region,phoneNumber:testReg.phoneNumber,type:1})
+// .then(res => {
+//     console.log(res)
+//     return db("creds").insert({mentor:res[0],email:testReg.email,password:testReg.password})
+// })
+// .then(res => console.log(res))
+// .catch(err => console.log(err))
 
 
 

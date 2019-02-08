@@ -20,7 +20,7 @@ exports.up = function(knex) {
         .notNullable()
 
         tbl
-        .string('recurring',255)
+        .string('reminder',255)
         .notNullable()
 
     });
