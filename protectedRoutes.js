@@ -84,6 +84,37 @@ router.get("/get-clients", async (req, res) => {
     }
     });
 
+router.get("/get-all-clients", async (req, res) => {
+    try {
+        const groups = await db.getAllClients();
+        res.status(200).json(groups);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ message: `Server error`, error: err });
+    }
+    });
+
+router.get("/get-regional-clients", async (req, res) => {
+    try {
+        const groups = await db.getRegionalClients(req.decoded);
+        res.status(200).json(groups);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ message: `Server error`, error: err });
+    }
+    });
+
+router.post("/add-clients", async (req, res) => {
+    try {
+        const groups = await db.addClient(req.body);
+        res.status(200).json(groups);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ message: `Server error`, error: err });
+    }
+    });
+
+
 router.get("/logout",(req,res) => {
 
     res.status(200).send("<h1>You have successfully logged out</h1>");

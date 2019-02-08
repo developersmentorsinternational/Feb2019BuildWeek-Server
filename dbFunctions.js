@@ -46,7 +46,7 @@ const dbFuncs = {
     }
     ,
     getRegions: () => {
-        return db("regions")
+        return db("regions");
     },
     getResources: () => {
         return Promise.all([db("regions"),db("countryCodes"),db("types")])
@@ -65,7 +65,30 @@ const dbFuncs = {
         return db.select(['clientsgroup.groupID',"groups.name","people.*"]).from('clientsgroup')
         .innerJoin('groups', 'groups.id', 'clientsgroup.groupID')
         .innerJoin('people', 'people.id', 'clientsgroup.clientID')
-        .where({creatorID: creds.id})
+        .where({creatorID: creds.id});
+    },
+    getAllClients: () => {
+        return db("people").where({type:2});
+    },
+    getRegionalClients: (creds) => {
+        return db.transaction(function(trx) {
+            db.select(["regions.id"]).from('people')
+            .innerJoin('regions', 'people.region', 'regions.id')
+            .innerJoin('creds', 'people.id', 'creds.mentor')
+            .where({"mentor":creds.id})
+            .first()
+              .transacting(trx)
+              .then(function(res) {
+                  return db.select().from("people").where({region:res.id}).transacting(trx)
+              })
+              .then(res => {
+                  trx.commit(res)
+                })
+              .catch(trx.rollback);
+          })
+    }
+    ,addClient: (client) => {
+        return db("people").insert({firstName:client.firstName,lastName:client.lastName,countryCode:client.countryCode,region:client.region,phoneNumber:client.phoneNumber,type:2})
     }
 }
 
