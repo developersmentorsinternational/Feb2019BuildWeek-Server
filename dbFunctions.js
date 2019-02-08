@@ -136,17 +136,27 @@ const dbFuncs = {
         })
     },
     testTwilio: () => {
-        client.messaging.services
-                .create({friendlyName: 'friendlyName'})
-                .then(service => console.log(service.sid))
-                .done();
-        client.messages.create({
-            to: process.env.MY_NUM,
-            from: process.env.SERVICE_SID,
-            body: 'Hello from Twilio!'
-          })
-          .then(message => console.log(message.sid))
-          .done();
+        const numbers = []
+        numbers.length = 5
+        numbers.fill(process.env.MY_NUM)
+        Promise.all(
+            numbers.map(number =>{
+                return client.messages.create({
+                    to: number,
+                    messagingServiceSid: process.env.SERVICE_SID,
+                    body: 'Hello from Twilio!'
+                  })
+            })
+        )
+        .then(message => {
+            console.log(message.sid)
+        })
+        .catch(err => console.log(err));
+
+        
+        //   .then(message => console.log(message.sid))
+        //   .catch(error => console.log(error))
+        //   .done();
         
     }
 }
