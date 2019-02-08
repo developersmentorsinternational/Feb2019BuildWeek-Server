@@ -47,6 +47,25 @@ const dbFuncs = {
     ,
     getRegions: () => {
         return db("regions")
+    },
+    getResources: () => {
+        return Promise.all([db("regions"),db("countryCodes"),db("types")])
+        .then(res => {
+        const data = {};
+        data.regions = res[0]
+        data.countryCodes = res[1]
+        data.types = res[2]
+        return data
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    },
+    getOwnClients: (creds) => {
+        return db.select(['clientsgroup.groupID',"groups.name","people.*"]).from('clientsgroup')
+        .innerJoin('groups', 'groups.id', 'clientsgroup.groupID')
+        .innerJoin('people', 'people.id', 'clientsgroup.clientID')
+        .where({creatorID: creds.id})
     }
 }
 

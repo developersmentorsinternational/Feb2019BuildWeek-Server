@@ -30,15 +30,21 @@ const db = require("./dbConfig");
 
 // db.select(["groups.name","messages.body","messages.created"]).from('groups')
 // .innerJoin('groupmessages', 'groups.creatorID', 'groupmessages.creatorID')
+////////////////////////////////////////////////////////
+const prom1 = db.select(['clientsgroup.groupID',"groups.name","people.*"]).from('clientsgroup')
+// .innerJoin('messages','messages.id', 'groupmessages.messageID')
+.innerJoin('groups', 'groups.id', 'clientsgroup.groupID')
+.innerJoin('people', 'people.id', 'clientsgroup.clientID')
+// .innerJoin('regions', 'people.region', 'regions.id')
+// .innerJoin('types', 'people.type', 'types.id')
+// .innerJoin('countryCodes', 'people.countryCode', 'countryCodes.id')
+.where({creatorID: 1})
 
 
-const prom1 = db.select(["groups.name","groupmessages.groupID","groupmessages.messageID","messages.body","messages.created"]).from('groupmessages')
-.innerJoin('messages','messages.id', 'groupmessages.messageID')
-.innerJoin('groups', 'groups.id', 'groupmessages.groupID')
 
-.where({"email": 1})
-// .then(res => console.log(res))
-// .catch(err => console.log(err))
+
+// db.select().from('people').where({type:2})
+// db("clientsgroup").insert({clientID:1,groupID:4})
 .then(res => {
     console.log(res)
     process.exit();
@@ -47,6 +53,28 @@ const prom1 = db.select(["groups.name","groupmessages.groupID","groupmessages.me
     console.log(err)
     process.exit();
 })
+
+//"groups.id",
+
+
+
+///////////////////////////////////////////////////////
+
+// const prom1 = db.select(["groups.name","groupmessages.groupID","groupmessages.messageID","messages.body","messages.created"]).from('groupmessages')
+// .innerJoin('messages','messages.id', 'groupmessages.messageID')
+// .innerJoin('groups', 'groups.id', 'groupmessages.groupID')
+
+// .where({"email": 1})
+// // .then(res => console.log(res))
+// // .catch(err => console.log(err))
+// .then(res => {
+//     console.log(res)
+//     process.exit();
+//     })
+// .catch(err => {
+//     console.log(err)
+//     process.exit();
+// })
 
 
 // const prom2 = db.select().from('messages')

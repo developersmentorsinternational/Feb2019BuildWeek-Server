@@ -74,6 +74,16 @@ router.get("/get-groups", async (req, res) => {
     }
     });
 
+router.get("/get-clients", async (req, res) => {
+    try {
+        const groups = await db.getOwnClients(req.decoded);
+        res.status(200).json(groups);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ message: `Server error`, error: err });
+    }
+    });
+
 router.get("/logout",(req,res) => {
 
     res.status(200).send("<h1>You have successfully logged out</h1>");

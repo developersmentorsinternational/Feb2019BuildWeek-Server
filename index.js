@@ -27,6 +27,16 @@ server.get("/regions", async (req,res) => {
   }
 })
 
+server.get("/resources", async (req, res) => {
+  try {
+    let resources = await db.getResources();
+    res.status(200).json(resources);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: `Server error`, error: err });
+  }
+});
+
 async function register(req, res) {
   let userInfo = req.body;
   const hash = bcrypt.hashSync(userInfo.password, 12);
