@@ -74,32 +74,34 @@ const client = {
 // })
 
 
-db.transaction(function(trx) {
-    db.select(["regions.id"]).from('people')
-    .innerJoin('regions', 'people.region', 'regions.id')
-    .innerJoin('creds', 'people.id', 'creds.mentor')
-    .where({"creds.id":1})
-    .first()
-      .transacting(trx)
-      .then(function(res) {
-          return db.select().from("people").where({region:res.id}).transacting(trx)
-      })
-      .then(res => {
-          trx.commit(res)
-        })
-      .catch(trx.rollback);
-  })
-  .then(function(res) {
-    console.log(res);
-  })
-  .catch(function(err) {
-    console.error(err);
-});
+// db.transaction(function(trx) {
+//     db.select(["regions.id"]).from('people')
+//     .innerJoin('regions', 'people.region', 'regions.id')
+//     .innerJoin('creds', 'people.id', 'creds.mentor')
+//     .where({"creds.id":1})
+//     .first()
+//       .transacting(trx)
+//       .then(function(res) {
+//           return db.select().from("people").where({region:res.id}).transacting(trx)
+//       })
+//       .then(res => {
+//           trx.commit(res)
+//         })
+//       .catch(trx.rollback);
+//   })
+//   .then(function(res) {
+//     console.log(res);
+//   })
+//   .catch(function(err) {
+//     console.error(err);
+// });
+
+
   
 
 
 ////////////////////////////////
-// transaction for client to groups
+//transaction for attaching a group to an event
 // db.transaction(function(trx) {
 //     db("people").insert({firstName:client.firstName,lastName:testReg.lastName,countryCode:testReg.countryCode,region:testReg.region,phoneNumber:testReg.phoneNumber,type:2})
 //       .transacting(trx)

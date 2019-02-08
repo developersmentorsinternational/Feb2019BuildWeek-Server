@@ -20,13 +20,18 @@ const dbFuncs = {
     addMentor: (userInfo) => {
         const {firstName,lastName,countryCode,region,phoneNumber} = userInfo;
         const {email,password} = userInfo;
-        const type = 1;
-        return db("people")
-        .insert({firstName,lastName,countryCode,region,phoneNumber,type})
-        .then(res => {
-            return db("creds").insert({mentor:res[0],email,password})
-        })
-        .catch(err => err)
+
+        return db.transaction(function(trx) {
+            db("people").insert({firstName,lastName,countryCode,region,phoneNumber,type:1})
+              .transacting(trx)
+              .then(function(res) {
+                  return db("creds").insert({mentor:res[0],email,password}).transacting(trx)
+              })
+              .then(res => {
+                  trx.commit(res)
+                })
+              .catch(trx.rollback);
+          })
     },
     // submitMessage: (message) => {
 
@@ -89,6 +94,12 @@ const dbFuncs = {
     }
     ,addClient: (client) => {
         return db("people").insert({firstName:client.firstName,lastName:client.lastName,countryCode:client.countryCode,region:client.region,phoneNumber:client.phoneNumber,type:2})
+    },
+    createGroup: (creds,group) => {
+        return db("groups");
+    },
+    getEvents: () => {
+        return db("events")
     }
 }
 
