@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('people').insert([
-        {firstName: 'Dan',lastName:"Mendez",phoneNumber:"9545551234",countryCode:1,type:1,region:10},
+        {firstName: 'John',lastName:"Hernandez",phoneNumber:"9545551234",countryCode:1,type:1,region:10},
         {firstName: 'Jason',lastName:"Smith",phoneNumber:"2125559876",countryCode:1,type:1,region:33},
         {firstName: 'Jane',lastName:"Doe",phoneNumber:"3054567123",countryCode:1,type:1,region:22},
         {firstName: 'Rick',lastName:"Sanchez",phoneNumber:"6464567123",countryCode:1,type:2,region:10},
@@ -16,7 +16,17 @@ exports.seed = function(knex, Promise) {
         {firstName: 'Ashley',lastName:"Simmons",phoneNumber:"9984567109",countryCode:1,type:2,region:33},
         {firstName: 'Adam',lastName:"Savage",phoneNumber:"5643145678",countryCode:1,type:2,region:22},
         {firstName: 'Erin',lastName:"Bower",phoneNumber:"8671234112",countryCode:1,type:2,region:22},
-        {firstName: 'Sandy',lastName:"Brown",phoneNumber:"9098891612",countryCode:1,type:2,region:22}
+        {firstName: 'Sandy',lastName:"Brown",phoneNumber:"9098891612",countryCode:1,type:2,region:22},
+        {firstName: 'Sukhada',lastName:"Gholba",phoneNumber:"4084661501",countryCode:1,type:2,region:10},
+        {firstName: 'Cecil',lastName:"John",phoneNumber:"3109978787",countryCode:1,type:2,region:10},
+        {firstName: 'Olympia',lastName:"Wojcik",phoneNumber:"9543475618",countryCode:1,type:2,region:10},
+        {firstName: 'Jaspal',lastName:"iOS",phoneNumber:"9543475976",countryCode:1,type:2,region:10},
+        {firstName: 'Larry',lastName:"Simiyu",phoneNumber:"9549934366",countryCode:1,type:2,region:10},
+        {firstName: 'Lloyd',lastName:"Edwards",phoneNumber:"9549934372",countryCode:1,type:2,region:10},
+        
+
+   
+
         // {id:1,firstName: 'Dan',lastName:"Mendez",phoneNumber:"9545551234",countryCode:1,type:1,region:10},
         // {id: 2, firstName: 'Jason',lastName:"Smith",phoneNumber:"2125559876",countryCode:1,type:1,region:33},
         // {id: 3, firstName: 'Jane',lastName:"Doe",phoneNumber:"3054567123",countryCode:1,type:1,region:22},

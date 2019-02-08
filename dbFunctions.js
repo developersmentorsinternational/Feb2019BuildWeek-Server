@@ -134,7 +134,86 @@ const dbFuncs = {
             })
             .catch(trx.rollback);
         })
-    },
+    },setGrEvRemind: (gEvent) => {
+        const {event,group,body} = {...gEvent}
+
+        return db.transaction(function(trx) {
+            db.select()
+            .count("id as CNT")
+            .from("groupevents")
+            .where({groupID:group})
+            .andWhere({eventID:event})
+            .first()
+            .transacting(trx)
+            .then(res => {
+                if(res.CNT){
+                    throw "This event attached to the specified group";
+                } else{
+                    return db("groupevents").insert({groupID:group,eventID:event}).transacting(trx)
+                }
+            })
+            .then(() => {
+                return db.select("people.*")
+                .from("clientsgroup")
+                .innerJoin("people","people.id","clientsgroup.clientID")
+                .where({groupID:group}).transacting(trx)
+         
+            })
+            .then( async(res) => {
+                const clientMessage = res.map(ele => {
+                    const message = `Hi ${ele.firstName},${body}`
+                    const phoneNumber = `+1${ele.phoneNumber}`
+                    return {message,phoneNumber}
+                    })
+                const func = async (eventID) => {
+                   try{ 
+                     const res = await db.select("reminder")
+                    .from("events")
+                    .where({id:eventID}).first().transacting(trx)
+                    return res
+                    }catch(err){
+                        console.log(err)
+                    }
+                }
+                const remind = await func(event);
+                console.log(remind)
+                let time = remind.reminder.split(" ")
+                time = time[0];
+                
+                
+                const callback = () => Promise.all(
+                    clientMessage.map(clientData =>{
+                        return client.messages.create({
+                            to: process.env.MY_NUM,
+                            messagingServiceSid: process.env.SERVICE_SID,
+                            body: clientData.message
+                          })
+                    })
+                )
+                .then(message => {
+                    console.log(message.sid)
+                })
+                .catch(err => console.log(err));
+
+                setTimeout(callback, time*1000)
+
+                return callback()
+
+            })
+            .then(() => {
+                const created = moment().format('YYYY-MM-DD HH:MM')
+                return db("messages").insert({body:body,created}).transacting(trx)
+            })
+            .then(res => {
+                return db("groupmessages").insert({groupID:group,messageID:res[0]}).transacting(trx)
+            })
+            .then(res => {
+                trx.commit(res)
+            })
+            .catch(trx.rollback);
+        })
+    }
+    ,
     testTwilio: () => {
         const numbers = []
         numbers.length = 5
@@ -142,7 +221,7 @@ const dbFuncs = {
         Promise.all(
             numbers.map(number =>{
                 return client.messages.create({
-                    to: number,
+                    to: process.env.SERVICE_SID,
                     messagingServiceSid: process.env.SERVICE_SID,
                     body: 'Hello from Twilio!'
                   })

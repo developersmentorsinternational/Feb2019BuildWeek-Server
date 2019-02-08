@@ -143,36 +143,36 @@ const client = {
 
 //////////////////////////
 // Get group events
-let creds = {}
-creds.id = 1
-db.transaction(function(trx) {
-        db.select()
-        .count("id as CNT")
-        .from("groupevents")
-        .where({groupID:group})
-        .andWhere({eventID:event})
-        .first()
-        .transacting(trx)
-        .then(res => {
-            if(res.CNT){
-                throw "This event attached to the specified group";
-            } else{
-                return db("groupevents").insert({groupID:group,eventID:event}).transacting(trx)
-            }
-        })
-        .then(() => {
-            const created = moment().format('YYYY-MM-DD HH:MM')
-            return db("messages").insert({body:body,created}).transacting(trx)
-        })
-        .then(res => {
-            return db("groupmessages").insert({groupID:group,messageID:res[0]}).transacting(trx)
-        })
-        .then(res => {
-            trx.commit(res)
-        })
-        .catch(trx.rollback);
-    })
-}
+// let creds = {}
+// creds.id = 1
+// db.transaction(function(trx) {
+//         db.select()
+//         .count("id as CNT")
+//         .from("groupevents")
+//         .where({groupID:group})
+//         .andWhere({eventID:event})
+//         .first()
+//         .transacting(trx)
+//         .then(res => {
+//             if(res.CNT){
+//                 throw "This event attached to the specified group";
+//             } else{
+//                 return db("groupevents").insert({groupID:group,eventID:event}).transacting(trx)
+//             }
+//         })
+//         .then(() => {
+//             const created = moment().format('YYYY-MM-DD HH:MM')
+//             return db("messages").insert({body:body,created}).transacting(trx)
+//         })
+//         .then(res => {
+//             return db("groupmessages").insert({groupID:group,messageID:res[0]}).transacting(trx)
+//         })
+//         .then(res => {
+//             trx.commit(res)
+//         })
+//         .catch(trx.rollback);
+//     })
+// }
 
 // db.transaction(function(trx) {
 //     db("people").insert({firstName:client.firstName,lastName:testReg.lastName,countryCode:testReg.countryCode,region:testReg.region,phoneNumber:testReg.phoneNumber,type:2})
@@ -281,3 +281,18 @@ db.transaction(function(trx) {
 // SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
 // FROM Orders
 // INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+
+const group = 5
+
+db.select("people.*")
+.from("clientsgroup")
+.innerJoin("people","people.id","clientsgroup.clientID")
+.where({groupID:group})
+.then(res => {
+    console.log(res)
+    process.exit();
+    })
+.catch(err => {
+    console.log(err)
+    process.exit();
+})

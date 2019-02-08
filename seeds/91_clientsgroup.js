@@ -13,7 +13,13 @@ exports.seed = function(knex, Promise) {
         { groupID: 3,clientID:9},
         { groupID: 3,clientID:10},
         { groupID: 4,clientID:11},
-        { groupID: 4,clientID:12}
+        { groupID: 4,clientID:12},
+        { groupID: 5,clientID:13},
+        { groupID: 5,clientID:14},
+        { groupID: 5,clientID:15},
+        { groupID: 5,clientID:16},
+        { groupID: 5,clientID:17},
+        { groupID: 5,clientID:18}
       ])
       ;
     });
