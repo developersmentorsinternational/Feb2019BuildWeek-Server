@@ -184,7 +184,7 @@ const dbFuncs = {
                 const callback = () => Promise.all(
                     clientMessage.map(clientData =>{
                         return client.messages.create({
-                            to: process.env.MY_NUM,
+                            to: clientData.phoneNumber,
                             messagingServiceSid: process.env.SERVICE_SID,
                             body: clientData.message
                           })
