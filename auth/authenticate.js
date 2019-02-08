@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const jwtKey =
   process.env.JWT_SECRET;
-  // 'add a .env file to root of project with the JWT_SECRET variable';
 
 // quickly see what this file exports
 module.exports = {
@@ -37,7 +36,7 @@ function generateToken(user) {
 	const secret = process.env.JWT_SECRET;
 
 	const options = {
-		expiresIn: '5m',
+		expiresIn: '30m',
 	};
 
 	return jwt.sign(payload, secret, options);

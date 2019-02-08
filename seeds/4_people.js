@@ -19,7 +19,7 @@ exports.seed = function(knex, Promise) {
         {firstName: 'Sandy',lastName:"Brown",phoneNumber:"9098891612",countryCode:1,type:2,region:22},
         {firstName: 'Sukhada',lastName:"Gholba",phoneNumber:"4084661501",countryCode:1,type:2,region:10},
         {firstName: 'Cecil',lastName:"John",phoneNumber:"3109978787",countryCode:1,type:2,region:10},
-        {firstName: 'Olympia',lastName:"Wojcik",phoneNumber:"9543475618",countryCode:1,type:2,region:10},
+        {firstName: 'Olympia',lastName:"Wojcik",phoneNumber:"7036232009",countryCode:1,type:2,region:10},
         {firstName: 'Jaspal',lastName:"iOS",phoneNumber:"9543475976",countryCode:1,type:2,region:10},
         {firstName: 'Larry',lastName:"Simiyu",phoneNumber:"9549934366",countryCode:1,type:2,region:10},
         {firstName: 'Lloyd',lastName:"Edwards",phoneNumber:"9549934372",countryCode:1,type:2,region:10},
