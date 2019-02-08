@@ -1,4 +1,5 @@
 const db = require("./dbConfig");
+const moment = require("moment");
 
 const dbFuncs = {
     getMentors:  () => {
@@ -100,6 +101,37 @@ const dbFuncs = {
     },
     getEvents: () => {
         return db("events")
+    },
+    setGroupEvent: (gEvent) => {
+        const {event,group,body} = {...gEvent}
+
+        return db.transaction(function(trx) {
+            db.select()
+            .count("id as CNT")
+            .from("groupevents")
+            .where({groupID:group})
+            .andWhere({eventID:event})
+            .first()
+            .transacting(trx)
+            .then(res => {
+                if(res.CNT){
+                    throw "This event attached to the specified group";
+                } else{
+                    return db("groupevents").insert({groupID:group,eventID:event}).transacting(trx)
+                }
+            })
+            .then(() => {
+                const created = moment().format('YYYY-MM-DD HH:MM')
+                return db("messages").insert({body:body,created}).transacting(trx)
+            })
+            .then(res => {
+                return db("groupmessages").insert({groupID:group,messageID:res[0]}).transacting(trx)
+            })
+            .then(res => {
+                trx.commit(res)
+            })
+            .catch(trx.rollback);
+        })
     }
 }
 

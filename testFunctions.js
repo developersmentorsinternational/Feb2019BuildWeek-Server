@@ -1,4 +1,5 @@
 const db = require("./dbConfig");
+const moment = require("moment");
 
 // db.select(["people.id","creds.email","creds.password","firstName","lastName","countryCodes.countryCode","types.type","regions.region"]).from('people')
 // .innerJoin('countryCodes', 'people.countryCode', 'countryCodes.id')
@@ -102,6 +103,45 @@ const client = {
 
 ////////////////////////////////
 //transaction for attaching a group to an event
+const object = {event:3,group:1,body:"This is a test message"}
+
+db.transaction(function(trx) {
+    db.select()
+    .count("id as CNT")
+    .from("groupevents")
+    .where({groupID:object.group})
+    .andWhere({eventID:object.event})
+    .first()
+    .transacting(trx)
+    .then(res => {
+        if(res.CNT){
+            throw "This event attached to the specified group";
+        } else{
+            return db("groupevents").insert({groupID:object.group,eventID:object.event}).transacting(trx)
+        }
+    })
+    .then(res => {
+        const created = moment().format('YYYY-MM-DD HH:MM')
+        return db("messages").insert({body:object.body,created}).transacting(trx)
+    })
+    .then(res => {
+        return db("groupmessages").insert({groupID:object.group,messageID:res[0]}).transacting(trx)
+    })
+    .then(res => {
+        trx.commit(res)
+    })
+    .catch(trx.rollback);
+})
+.then(res => {
+    console.log(res)
+    process.exit();
+    })
+.catch(err => {
+    console.log(err)
+    process.exit();
+})
+
+
 // db.transaction(function(trx) {
 //     db("people").insert({firstName:client.firstName,lastName:testReg.lastName,countryCode:testReg.countryCode,region:testReg.region,phoneNumber:testReg.phoneNumber,type:2})
 //       .transacting(trx)
