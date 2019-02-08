@@ -1,5 +1,7 @@
 const db = require("./dbConfig");
 const moment = require("moment");
+const twilio = require('twilio');
+var client = new twilio(process.env.ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 const dbFuncs = {
     getMentors:  () => {
@@ -132,6 +134,20 @@ const dbFuncs = {
             })
             .catch(trx.rollback);
         })
+    },
+    testTwilio: () => {
+        client.messaging.services
+                .create({friendlyName: 'friendlyName'})
+                .then(service => console.log(service.sid))
+                .done();
+        client.messages.create({
+            to: process.env.MY_NUM,
+            from: process.env.SERVICE_SID,
+            body: 'Hello from Twilio!'
+          })
+          .then(message => console.log(message.sid))
+          .done();
+        
     }
 }
 

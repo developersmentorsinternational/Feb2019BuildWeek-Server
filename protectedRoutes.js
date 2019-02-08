@@ -16,6 +16,17 @@ router.get("/", async (req, res) => {
     }
   });
 
+router.get("/test-twilio", async (req, res) => {
+    try {
+      let test = await db.testTwilio();
+      console.log(test)
+      res.status(200).end();
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: `Server error`, error: err });
+    }
+  });
+
 router.get("/user", async (req, res) => {
     try {
       let user = await db.getMentor(req.decoded);
@@ -143,6 +154,16 @@ router.get("/get-events", async (req, res) => {
         res.status(500).json({ message: `Server error`, error: err });
     }
     });
+
+// router.get("/get-groups-events", async (req, res) => {
+//     try {
+//         const groupsEvents = await db.setGroupEvent(req.decoded);
+//         res.status(200).json(groupsEvents);
+//     } catch (err) {
+//         console.log(err.message);
+//         res.status(500).json({ message: `Server error`, error: err });
+//     }
+//     });
 
 router.post("/set-group-event", async (req, res) => {
     try {

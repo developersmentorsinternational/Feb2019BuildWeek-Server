@@ -103,44 +103,76 @@ const client = {
 
 ////////////////////////////////
 //transaction for attaching a group to an event
-const object = {event:3,group:1,body:"This is a test message"}
+// const object = {event:3,group:1,body:"This is a test message"}
 
+// db.transaction(function(trx) {
+//     db.select()
+//     .count("id as CNT")
+//     .from("groupevents")
+//     .where({groupID:object.group})
+//     .andWhere({eventID:object.event})
+//     .first()
+//     .transacting(trx)
+//     .then(res => {
+//         if(res.CNT){
+//             throw "This event attached to the specified group";
+//         } else{
+//             return db("groupevents").insert({groupID:object.group,eventID:object.event}).transacting(trx)
+//         }
+//     })
+//     .then(res => {
+//         const created = moment().format('YYYY-MM-DD HH:MM')
+//         return db("messages").insert({body:object.body,created}).transacting(trx)
+//     })
+//     .then(res => {
+//         return db("groupmessages").insert({groupID:object.group,messageID:res[0]}).transacting(trx)
+//     })
+//     .then(res => {
+//         trx.commit(res)
+//     })
+//     .catch(trx.rollback);
+// })
+// .then(res => {
+//     console.log(res)
+//     process.exit();
+//     })
+// .catch(err => {
+//     console.log(err)
+//     process.exit();
+// })
+
+//////////////////////////
+// Get group events
+let creds = {}
+creds.id = 1
 db.transaction(function(trx) {
-    db.select()
-    .count("id as CNT")
-    .from("groupevents")
-    .where({groupID:object.group})
-    .andWhere({eventID:object.event})
-    .first()
-    .transacting(trx)
-    .then(res => {
-        if(res.CNT){
-            throw "This event attached to the specified group";
-        } else{
-            return db("groupevents").insert({groupID:object.group,eventID:object.event}).transacting(trx)
-        }
+        db.select()
+        .count("id as CNT")
+        .from("groupevents")
+        .where({groupID:group})
+        .andWhere({eventID:event})
+        .first()
+        .transacting(trx)
+        .then(res => {
+            if(res.CNT){
+                throw "This event attached to the specified group";
+            } else{
+                return db("groupevents").insert({groupID:group,eventID:event}).transacting(trx)
+            }
+        })
+        .then(() => {
+            const created = moment().format('YYYY-MM-DD HH:MM')
+            return db("messages").insert({body:body,created}).transacting(trx)
+        })
+        .then(res => {
+            return db("groupmessages").insert({groupID:group,messageID:res[0]}).transacting(trx)
+        })
+        .then(res => {
+            trx.commit(res)
+        })
+        .catch(trx.rollback);
     })
-    .then(res => {
-        const created = moment().format('YYYY-MM-DD HH:MM')
-        return db("messages").insert({body:object.body,created}).transacting(trx)
-    })
-    .then(res => {
-        return db("groupmessages").insert({groupID:object.group,messageID:res[0]}).transacting(trx)
-    })
-    .then(res => {
-        trx.commit(res)
-    })
-    .catch(trx.rollback);
-})
-.then(res => {
-    console.log(res)
-    process.exit();
-    })
-.catch(err => {
-    console.log(err)
-    process.exit();
-})
-
+}
 
 // db.transaction(function(trx) {
 //     db("people").insert({firstName:client.firstName,lastName:testReg.lastName,countryCode:testReg.countryCode,region:testReg.region,phoneNumber:testReg.phoneNumber,type:2})

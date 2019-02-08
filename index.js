@@ -75,6 +75,10 @@ async function login(req, res) {
 server.post('/register', register);
 server.post('/login', login);
 
+server.post('/twilio-callback', (req,res) => {
+  console.log(req.body);
+  res.status(200).end();
+});
 
 server.use('/api', authenticate ,protectedRoutes);
 
